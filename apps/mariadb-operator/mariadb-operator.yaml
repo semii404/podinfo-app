@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: mariadb-operator
-        image: "bitnami/mariadb-operator:latest"  # Use the latest image
+        image: "mariadb/mariadb-operator-enterprise:latest"  # Use the correct image
         ports:
         - containerPort: 8080
         env:
