@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-operator
+  namespace: mariadb-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb-operator
+  template:
+    metadata:
+      labels:
+        app: mariadb-operator
+    spec:
+      containers:
+        - name: mariadb-operator
+          image: mariadb/mariadb-operator-enterprise:latest
+          ports:
+            - containerPort: 8080
