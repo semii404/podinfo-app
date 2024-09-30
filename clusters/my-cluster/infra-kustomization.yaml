@@ -10,7 +10,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: mariadb-operator
+    name: infra
   targetNamespace: mariadb-operator
 
 
