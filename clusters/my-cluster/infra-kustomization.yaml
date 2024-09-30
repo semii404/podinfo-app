@@ -10,8 +10,9 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: flux-system
+    name: infra         # Updated to match the GitRepository name in infra.yaml
   targetNamespace: mariadb-operator
+
 
 
 #   ---
