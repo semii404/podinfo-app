@@ -8,7 +8,7 @@ resources:
   - mariadb.yaml
   # - minio-ca-secret.yaml
   # - minio-sealedsecret.yaml
-  # - photoprism-database.yaml
+  - photoprism-database.yaml
   # - photoprism-grant.yaml
   # - photoprism-sealedsecret.yaml
   # - photoprism-user.yaml
