@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb-operator
+  namespace: mariadb-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb-operator
+  template:
+    metadata:
+      labels:
+        app: mariadb-operator
+    spec:
+      containers:
+      - name: mariadb-operator
+        image: "bitnami/mariadb-operator:latest"  # Use the latest image
+        ports:
+        - containerPort: 8080
+        env:
+        - name: WATCH_NAMESPACE
+          value: ""
+        - name: OPERATOR_NAME
+          value: "mariadb-operator"
