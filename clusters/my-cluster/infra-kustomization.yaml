@@ -6,30 +6,30 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m0s
-  path: ./apps/mariadb-operator/namespace.yaml
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: infra
-
-
-
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: mariadb-operator
-  namespace: flux-system
-spec:
-  interval: 5m0s
   path: ./apps/mariadb-operator
   prune: true
   sourceRef:
     kind: GitRepository
     name: infra
-  dependsOn:
-    - name: mariadb-namespace  # Ensures namespace is created first
-  targetNamespace: mariadb-operator
+
+
+
+# ---
+# apiVersion: kustomize.toolkit.fluxcd.io/v1
+# kind: Kustomization
+# metadata:
+#   name: mariadb-operator
+#   namespace: flux-system
+# spec:
+#   interval: 5m0s
+#   path: ./apps/mariadb-operator
+#   prune: true
+#   sourceRef:
+#     kind: GitRepository
+#     name: infra
+#   dependsOn:
+#     - name: mariadb-namespace  # Ensures namespace is created first
+#   targetNamespace: mariadb-operator
 
 
 
