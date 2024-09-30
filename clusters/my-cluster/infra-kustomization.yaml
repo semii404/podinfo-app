@@ -10,7 +10,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: infra
+    name: flux-system
   targetNamespace: mariadb-operator
 
 
