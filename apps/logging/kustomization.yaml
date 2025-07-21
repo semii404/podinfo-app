@@ -8,3 +8,4 @@ resources:
   - fluentd-configmap.yaml
   - fluentd-deployment.yaml
   - fluentd-service.yaml
+  - s3-cleanup-configmap.yaml
