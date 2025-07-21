@@ -22,14 +22,31 @@ spec:
               command: ["/bin/sh", "-c"]
               args:
                 - |
-                  pip install boto3 && cp -r /usr/local/lib/python3.10/site-packages/* /boto3-layer/
+                  pip install boto3 && \
+                  cp -r /usr/local/lib/python3.10/site-packages/* /boto3-layer/
               volumeMounts:
                 - name: boto3-layer
                   mountPath: /boto3-layer
           containers:
             - name: s3-cleaner
-              image: python:3.10-slim
-              command: ["python", "/scripts/delete_old_s3_objects.py"]
+              image: gcr.io/google-containers/pause:3.9
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  python /scripts/delete_old_s3_objects.py
+              env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: aws-credentials
+                      key: AWS_ACCESS_KEY_ID
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: aws-credentials
+                      key: AWS_SECRET_ACCESS_KEY
+                - name: AWS_DEFAULT_REGION
+                  value: us-east-1
               volumeMounts:
                 - name: boto3-layer
                   mountPath: /usr/local/lib/python3.10/site-packages
