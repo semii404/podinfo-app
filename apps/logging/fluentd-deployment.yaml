@@ -14,29 +14,25 @@ spec:
         app: fluentd
     spec:
       securityContext:
-        runAsUser: 0   # Run all containers in the pod as root
+        runAsUser: 0  # run as root
       initContainers:
         - name: install-s3-plugin
           image: fluent/fluentd:v1.16-1
           command: ["/bin/sh", "-c"]
           args:
             - |
-              apk add --no-cache --update --virtual .build-deps \
-                sudo build-base ruby-dev libffi-dev \
-              && gem install fluent-plugin-s3 --no-document \
-              && apk del .build-deps \
-              && rm -rf /tmp/* /var/tmp/* /usr/lib/ruby/gems/*/cache/*.gem
+              gem install fluent-plugin-s3 --no-document
           volumeMounts:
             - name: fluentd-plugins
               mountPath: /fluentd/plugins
       containers:
         - name: fluentd
           image: fluent/fluentd:v1.16-1
-          ports:
-            - containerPort: 24224
           env:
             - name: FLUENTD_OPT
               value: "-p /fluentd/plugins"
+          ports:
+            - containerPort: 24224
           volumeMounts:
             - name: config
               mountPath: /fluentd/etc
