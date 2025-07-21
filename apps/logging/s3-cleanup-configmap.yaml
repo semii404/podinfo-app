@@ -5,4 +5,8 @@ metadata:
   namespace: logging
 data:
   delete_old_s3_objects.py: |
-    print("This is a placeholder for the S3 cleanup script.")
+    for i in range(1, 100):
+        #add delay of 3 seconds
+        import time
+        time.sleep(3)
+        print(f"Deleting old S3 objects {i}")
