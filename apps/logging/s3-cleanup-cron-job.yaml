@@ -5,21 +5,32 @@ metadata:
   namespace: logging
 spec:
   schedule: "*/2 * * * *"
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
+      ttlSecondsAfterFinished: 60
       template:
         spec:
           restartPolicy: OnFailure
           volumes:
             - name: boto3-layer
-              emptyDir: {}
+              persistentVolumeClaim:
+                claimName: boto3-pvc
             - name: script
               configMap:
                 name: s3-cleanup-script
-          initContainers:
-            - name: run-script
+          containers:
+            - name: s3-cleaner
               image: python:3.10-slim
-              command: ["python", "/scripts/delete_old_s3_objects.py"]
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  if [ ! -d "/boto3/boto3_installed" ]; then
+                    pip install boto3 -t /boto3 && touch /boto3/boto3_installed;
+                  fi && \
+                  export PYTHONPATH=$PYTHONPATH:/boto3 && \
+                  python /scripts/delete_old_s3_objects.py
               env:
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
@@ -35,19 +46,6 @@ spec:
                   value: us-east-1
               volumeMounts:
                 - name: boto3-layer
-                  mountPath: /usr/local/lib/python3.10/site-packages
+                  mountPath: /boto3
                 - name: script
                   mountPath: /scripts
-            - name: install-boto3
-              image: python:3.10-slim
-              command: ["/bin/sh", "-c"]
-              args:
-                - |
-                  pip install boto3 && \
-                  cp -r /usr/local/lib/python3.10/site-packages/* /boto3-layer/
-              volumeMounts:
-                - name: boto3-layer
-                  mountPath: /boto3-layer
-          containers:
-            - name: s3-cleaner
-              image: registry.k8s.io/pause:3.9
