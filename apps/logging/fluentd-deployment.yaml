@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fluentd
+  namespace: logging
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fluentd
+  template:
+    metadata:
+      labels:
+        app: fluentd
+    spec:
+      containers:
+        - name: fluentd
+          image: saleem1212/fluentd-s3:latest
+          ports:
+            - containerPort: 24224
+          volumeMounts:
+            - name: config
+              mountPath: /fluentd/etc
+      volumes:
+        - name: config
+          configMap:
+            name: fluentd-config

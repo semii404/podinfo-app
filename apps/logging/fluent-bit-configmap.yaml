@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluent-bit-config
+  namespace: logging
+data:
+  fluent-bit.conf: |
+    [SERVICE]
+        Flush        5
+        Daemon       Off
+        Log_Level    info
+        Parsers_File parsers.conf
+        Hostname     ${HOSTNAME}
+
+    @INCLUDE input.conf
+    @INCLUDE filter.conf
+    @INCLUDE output.conf
+
+  input.conf: |
+    [INPUT]
+        Name              tail
+        Tag               varlog.*
+        Path              /var/log/**/*.log
+        Parser            syslog
+        DB                /var/log/flb_varlog.db
+        Mem_Buf_Limit     10MB
+        Skip_Long_Lines   Off
+
+  filter.conf: |
+    [FILTER]
+        Name                kubernetes
+        Match               varlog.*
+        Kube_Tag_Prefix     varlog.var.log.containers.
+        Merge_Log           On
+        Merge_Log_Key       log
+        K8S-Logging.Parser  On
+        K8S-Logging.Exclude On
+
+    [FILTER]
+        Name modify
+        Match *
+        Add log_source fluent-bit
+        Rename host node_hostname
+
+  output.conf: |
+    [OUTPUT]
+        Name  forward
+        Match *
+        Host  fluentd.logging.svc.cluster.local
+        Port  24224

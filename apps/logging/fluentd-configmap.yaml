@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fluentd-config
+  namespace: logging
+data:
+  fluent.conf: |
+    <source>
+      @type forward
+      port 24224
+      bind 0.0.0.0
+    </source>
+
+    <match **>
+      @type s3
+
+      aws_key_id rWX0b3tisbEWzkngihQi
+      aws_sec_key QN9oRnaHGGvzyOffqPj0y7wvqGicm1GHfp54cS58
+
+      s3_bucket logs
+      s3_region us-east-1
+      s3_endpoint http://minio.minio.svc.cluster.local:9000
+
+      force_path_style true
+
+      path logs/
+
+      s3_object_key_format %{path}%{time_slice}_%{index}.log
+
+      <buffer time>
+        timekey 5m
+        timekey_wait 10s
+        timekey_use_utc true
+      </buffer>
+    </match>
