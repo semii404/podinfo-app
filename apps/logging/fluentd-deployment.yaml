@@ -13,9 +13,11 @@ spec:
       labels:
         app: fluentd
     spec:
+      securityContext:
+        runAsUser: 0   # Run all containers in the pod as root
       initContainers:
         - name: install-s3-plugin
-          image: fluent/fluentd:latest
+          image: fluent/fluentd:v1.16-1
           command: ["/bin/sh", "-c"]
           args:
             - |
@@ -29,7 +31,7 @@ spec:
               mountPath: /fluentd/plugins
       containers:
         - name: fluentd
-          image: fluent/fluentd:latest
+          image: fluent/fluentd:v1.16-1
           ports:
             - containerPort: 24224
           env:
