@@ -30,7 +30,7 @@ spec:
                     pip install boto3 -t /boto3 && touch /boto3/boto3_installed;
                   fi && \
                   export PYTHONPATH=$PYTHONPATH:/boto3 && \
-                  python /scripts/delete_old_s3_objects.py
+                  python -u /scripts/delete_old_s3_objects.py
               env:
                 - name: AWS_ACCESS_KEY_ID
                   valueFrom:
