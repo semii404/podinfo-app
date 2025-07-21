@@ -10,3 +10,4 @@ resources:
   - fluentd-service.yaml
   - s3-cleanup-configmap.yaml
   - s3-cleanup-cron-job.yaml
+  - pv-pvc.yaml
