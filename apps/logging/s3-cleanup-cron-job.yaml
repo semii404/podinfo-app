@@ -4,7 +4,7 @@ metadata:
   name: s3-cleaner
   namespace: logging
 spec:
-  schedule: "*/2 * * * *"
+  schedule: "*/2 * * * *" # Runs every 2 minutes
   successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 1
   jobTemplate:
@@ -44,6 +44,10 @@ spec:
                       key: AWS_SECRET_ACCESS_KEY
                 - name: AWS_DEFAULT_REGION
                   value: us-east-1
+                - name: BUCKET_NAME
+                  value: poc1212 # bucket name
+                - name: DAYS_OLD
+                  value: "30" #days
               volumeMounts:
                 - name: boto3-layer
                   mountPath: /boto3
