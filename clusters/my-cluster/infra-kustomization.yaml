@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 5m0s
-  path: ./apps/script-runner
+  path: ./apps/logging
   prune: true
   sourceRef:
     kind: GitRepository
