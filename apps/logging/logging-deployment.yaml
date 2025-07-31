@@ -20,25 +20,14 @@ spec:
             - /bin/bash
             - -c
             - |
-              # Create a new script and append contents of logging-script.sh
-              cat /usr/local/bin/logging-script.sh >> /usr/local/bin/new-script2.sh
+              # Ensure the script is executable
+              chmod +x /usr/local/bin/logging-script.sh
 
-              # Make the new script executable
-              chmod +x /usr/local/bin/new-script2.sh
-              
-              # Run the newly created script in the background
-              while true
-              do
-                /usr/local/bin/new-script2.sh
+              # Run the script infinitely (in the foreground)
+              while true; do
+                /usr/local/bin/logging-script.sh  # Run the original script
                 sleep 5  # Sleep to avoid rapid execution
               done
-          #securityContext:
-          #  capabilities:
-          #    add:
-                #- SYS_ADMIN  # Grant capabilities to manage file permissions
-                #- CHOWN
-                #- DAC_OVERRIDE
-            #runAsUser: 0  # Optional: run as root (if needed for elevated privileges)
           volumeMounts:
             - name: script-volume
               mountPath: /usr/local/bin/logging-script.sh  # Path inside the container
