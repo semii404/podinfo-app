@@ -31,13 +31,13 @@ spec:
               
               # Keep the container alive
               while true; do sleep 3600; done
-          securityContext:
-            capabilities:
-              add:
-                - SYS_ADMIN  # Grant capabilities to manage file permissions
-                - CHOWN
-                - DAC_OVERRIDE
-            runAsUser: 0  # Optional: run as root (if needed for elevated privileges)
+          #securityContext:
+          #  capabilities:
+          #    add:
+                #- SYS_ADMIN  # Grant capabilities to manage file permissions
+                #- CHOWN
+                #- DAC_OVERRIDE
+            #runAsUser: 0  # Optional: run as root (if needed for elevated privileges)
           volumeMounts:
             - name: script-volume
               mountPath: /usr/local/bin/logging-script.sh  # Path inside the container
