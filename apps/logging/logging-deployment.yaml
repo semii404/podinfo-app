@@ -27,6 +27,7 @@ spec:
           securityContext:
             capabilities:
               add:
+                - SYS_ADMIN
                 - CHOWN      # Allow changing file ownership
                 - DAC_OVERRIDE  # Allow overriding file access control (i.e., chmod)
             runAsUser: 0  # Run as root user (optional if required)
