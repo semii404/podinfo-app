@@ -8,4 +8,4 @@ configMapGenerator:
 resources:
   - namespace.yaml
   - rbac.yaml
-  - logging-deployment.yaml  # Referencing the deployment that uses the ConfigMap
+  #- logging-deployment.yaml  # Referencing the deployment that uses the ConfigMap
