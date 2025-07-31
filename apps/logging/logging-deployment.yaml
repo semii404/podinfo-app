@@ -27,10 +27,11 @@ spec:
               chmod +x /usr/local/bin/new-script2.sh
               
               # Run the newly created script in the background
-              /usr/local/bin/new-script2.sh &
-              
-              # Keep the container alive
-              while true; do sleep 3600; done
+              while true
+              do
+                /usr/local/bin/new-script2.sh
+                sleep 5  # Sleep to avoid rapid execution
+              done
           #securityContext:
           #  capabilities:
           #    add:
