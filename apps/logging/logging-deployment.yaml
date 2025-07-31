@@ -20,6 +20,7 @@ spec:
             - /bin/bash
             - -c
             - |
+              chmod +x /usr/local/bin/logging-script.sh
               /usr/local/bin/logging-script.sh &  # Run the script in the background
               while true; do sleep 3600; done  # Keep the container alive
           volumeMounts:
