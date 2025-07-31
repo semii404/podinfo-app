@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: node-cron-runner
-  namespace: kube-system
+  namespace: script-runner
 spec:
   selector:
     matchLabels:
