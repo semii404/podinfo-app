@@ -2,8 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: logging-deployment
-  namespace: flux-system
-spec:
+  namespace: script-runner
   replicas: 1
   selector:
     matchLabels:
