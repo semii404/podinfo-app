@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logging-deployment
+  namespace: flux-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logging
+  template:
+    metadata:
+      labels:
+        app: logging
+    spec:
+      containers:
+        - name: logging-container
+          image: your-docker-image  # Replace with your actual image
+          command: ["/bin/bash", "-c", "/usr/local/bin/logging-script.sh"]  # Run the script
+          volumeMounts:
+            - name: script-volume
+              mountPath: /usr/local/bin/logging-script.sh  # Path in the container where the script is mounted
+              subPath: logging-script.sh  # This uses the file from the ConfigMap
+              readOnly: true
+      volumes:
+        - name: script-volume
+          configMap:
+            name: logging-script-config  # This is the name of the ConfigMap generated earlier

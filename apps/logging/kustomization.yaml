@@ -1,0 +1,7 @@
+configMapGenerator:
+  - name: logging-script-config
+    files:
+      - logging-script.sh  # This file will automatically be added to the ConfigMap
+
+resources:
+  - logging-deployment.yaml  # This is your Deployment resource that uses the ConfigMap
