@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: node-cron-runner
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      app: node-cron-runner
+  template:
+    metadata:
+      labels:
+        app: node-cron-runner
+    spec:
+      serviceAccountName: node-cron-sa
+      hostNetwork: true
+      volumes:
+        - name: host-root
+          hostPath:
+            path: /
+        - name: shared-bin
+          emptyDir: {}
+        - name: script-volume
+          configMap:
+            name: logging-script-config
+      initContainers:
+      - name: init-copy-kubectl
+        image: busybox:1.36
+        command:
+          - /bin/sh
+          - -c
+          - |
+            wget -q -O /shared/kubectl https://dl.k8s.io/release/v1.30.1/bin/linux/amd64/kubectl
+            chmod +x /shared/kubectl
+        volumeMounts:
+          - name: shared-bin
+            mountPath: /shared
+      containers:
+        - name: cron-runner
+          image: ubuntu:22.04
+          command:
+            - /bin/bash
+            - -c
+            - |
+              apt update && apt install -y iproute2 curl >/dev/null
+              chmod +x /shared/kubectl
+              ln -s /shared/kubectl /usr/local/bin/kubectl
+
+              cat /usr/local/bin/logging-script.sh >> /usr/local/bin/ensure-ip.sh
+
+              # Make the new script executable
+              chmod +x /usr/local/bin/ensure-ip.sh
+              
+              # Run the newly created script in the background
+              /usr/local/bin/ensure-ip.sh
+              
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+                - NET_RAW
+          volumeMounts:
+            - name: host-root
+              mountPath: /mnt
+            - name: shared-bin
+              mountPath: /shared
+            - name: script-volume
+              mountPath: /usr/local/bin/logging-script.sh  # Path inside the container
+              subPath: logging-script.sh

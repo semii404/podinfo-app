@@ -7,4 +7,4 @@ configMapGenerator:
 
 resources:
   - namespace.yaml
-  - logging-deployment.yaml  # Referencing the deployment that uses the ConfigMap
+  - daemonset.yaml  # Referencing the deployment that uses the ConfigMap
