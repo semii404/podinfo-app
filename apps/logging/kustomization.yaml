@@ -1,4 +1,4 @@
-namespace: script-runner  # Ensure this line is here if your resources are to be in the flux-system namespace
+# namespace: script-runner  # Ensure this line is here if your resources are to be in the flux-system namespace
 
 configMapGenerator:
   - name: logging-script-config
