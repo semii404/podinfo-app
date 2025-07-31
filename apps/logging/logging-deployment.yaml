@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: logging-deployment
-  namespace: script-runner  # Ensure this matches your desired namespace
+  # namespace: script-runner  # Ensure this matches your desired namespace
 spec:
   replicas: 1
   selector:
