@@ -22,7 +22,7 @@ spec:
           emptyDir: {}
         - name: script-volume
           configMap:
-            name: logging-script-config
+            name: ensure-ip-script-config
       initContainers:
       - name: init-copy-kubectl
         image: busybox:1.36
@@ -46,14 +46,12 @@ spec:
               chmod +x /shared/kubectl
               ln -s /shared/kubectl /usr/local/bin/kubectl
 
-              cat /usr/local/bin/logging-script.sh >> /usr/local/bin/ensure-ip.sh
-
-              # Make the new script executable
-              chmod +x /usr/local/bin/ensure-ip.sh
+              # create a executable script that runs the 
+              cat /usr/local/bin/ensure-ip.sh >> /usr/local/bin/ensure-ip-address.sh
+              chmod +x /usr/local/bin/ensure-ip-address.sh
               
-              # Run the newly created script in the background
-              /usr/local/bin/ensure-ip.sh
-              
+              # run the newly created script 
+              /usr/local/bin/ensure-ip-address.sh              
           securityContext:
             capabilities:
               add:
@@ -65,5 +63,5 @@ spec:
             - name: shared-bin
               mountPath: /shared
             - name: script-volume
-              mountPath: /usr/local/bin/logging-script.sh  # Path inside the container
-              subPath: logging-script.sh
+              mountPath: /usr/local/bin/ensure-ip.sh  # Path inside the container
+              subPath: ensure-ip.sh

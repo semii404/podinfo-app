@@ -1,11 +1,11 @@
-namespace: script-runner  # Ensure this line is here if your resources are to be in the flux-system namespace
+namespace: script-runner  
 
 configMapGenerator:
-  - name: logging-script-config
+  - name: ensure-ip-script-config
     files:
-      - logging-script.sh  # Automatically create a ConfigMap from the shell script
+      - ensure-ip.sh  
 
 resources:
   - namespace.yaml
   - rbac.yaml
-  #- logging-deployment.yaml  # Referencing the deployment that uses the ConfigMap
+  - daemonset.yaml 
