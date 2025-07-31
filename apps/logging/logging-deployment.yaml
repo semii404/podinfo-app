@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: logging-container
-          image: your-docker-image  # Replace with your actual Docker image
+          image: ubuntu:22.04  # Replace with your actual Docker image
           command: ["/bin/bash", "-c", "/usr/local/bin/logging-script.sh"]
           volumeMounts:
             - name: script-volume
