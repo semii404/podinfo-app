@@ -1,7 +1,9 @@
+namespace: flux-system  # Ensure this line is here if your resources are to be in the flux-system namespace
+
 configMapGenerator:
   - name: logging-script-config
     files:
-      - logging-script.sh  # This file will automatically be added to the ConfigMap
+      - logging-script.sh  # Automatically create a ConfigMap from the shell script
 
 resources:
-  - logging-deployment.yaml  # This is your Deployment resource that uses the ConfigMap
+  - logging-deployment.yaml  # Referencing the deployment that uses the ConfigMap
