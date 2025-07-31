@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: logging-deployment
-  # namespace: script-runner  # Ensure this matches your desired namespace
+  namespace: script-runner  # Ensure this matches your desired namespace
 spec:
   replicas: 1
   selector:
@@ -16,7 +16,12 @@ spec:
       containers:
         - name: logging-container
           image: ubuntu:22.04  # Replace with your actual Docker image
-          command: ["/bin/bash", "-c", "/usr/local/bin/logging-script.sh"]
+          command:
+            - /bin/bash
+            - -c
+            - |
+              /usr/local/bin/logging-script.sh &  # Run the script in the background
+              while true; do sleep 3600; done  # Keep the container alive
           volumeMounts:
             - name: script-volume
               mountPath: /usr/local/bin/logging-script.sh  # Path inside the container
