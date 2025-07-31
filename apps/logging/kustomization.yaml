@@ -6,4 +6,5 @@ configMapGenerator:
       - logging-script.sh  # Automatically create a ConfigMap from the shell script
 
 resources:
+  - namespace.yaml
   - logging-deployment.yaml  # Referencing the deployment that uses the ConfigMap
