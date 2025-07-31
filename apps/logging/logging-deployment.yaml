@@ -17,7 +17,7 @@ spec:
         - name: logging-container
           image: ubuntu:22.04  # Replace with your actual Docker image
           command:
-            - /bin/bash
+            - /bin/sh
             - -c
             - |
               # Ensure the script is executable
