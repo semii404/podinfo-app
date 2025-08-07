@@ -8,4 +8,4 @@ configMapGenerator:
 resources:
   - namespace.yaml
   - rbac.yaml
-  - daemonset.yaml 
+  # - daemonset.yaml 
