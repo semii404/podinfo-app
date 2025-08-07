@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: node-cron-runner
+  name: node-cron-runner-test
   namespace: script-runner
 spec:
   selector:
