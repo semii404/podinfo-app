@@ -1,0 +1,48 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: cilium
+  namespace: flux-system
+spec:
+  url: https://helm.cilium.io
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cilium
+  namespace: kube-system
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: cilium
+      version: 1.16.4 # pick your desired version
+      sourceRef:
+        kind: HelmRepository
+        name: cilium
+        namespace: flux-system
+  values:
+    hubble:
+      tls:
+        auto:
+          enabled: false
+          method: helm
+        server:
+          existingSecret: "hubble-multi-certs"
+      relay:
+        peerTarget: "hubble-peer.kube-system.svc.cluster.local:443"
+        enabled: true
+        tls:
+          client:
+            existingSecret: "hubble-multi-certs"
+          server:
+            enabled: true
+            mtls: true
+            existingSecret: "hubble-multi-certs"
+      ui:
+        enabled: true
+        tls:
+          client:
+            existingSecret: "hubble-multi-certs"
+    operator:
+      replicas: 1
