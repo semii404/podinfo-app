@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   url: https://helm.cilium.io
-  
+
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -17,7 +17,7 @@ spec:
   chart:
     spec:
       chart: cilium
-      version: 1.16.4 # pick your desired version
+      version: latest
       sourceRef:
         kind: HelmRepository
         name: cilium
