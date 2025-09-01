@@ -28,6 +28,7 @@ spec:
       nodeEncryption: true
       strictMode:
         enabled: true
+        cidr: "10.244.0.0/24"
     hubble:
       tls:
         auto:
