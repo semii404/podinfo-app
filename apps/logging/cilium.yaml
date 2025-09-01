@@ -23,7 +23,7 @@ spec:
         namespace: flux-system
   values:
     encryption:
-      enabled: false
+      enabled: true
       type: wireguard
       nodeEncryption: true
       strictMode:
