@@ -11,7 +11,7 @@ spec:
     name: hubble-ca-issuer
     kind: ClusterIssuer
   dnsNames:
-    - "*.kube-system.svc.cluster.local"
+    # - "*.kube-system.svc.cluster.local"
     - "hubble-peer.default.hubble-grpc.cilium.io"
     - "hubble-relay-wrong.kube-system.svc.cluster.local"
     - "minikube.default.hubble-grpc.cilium.io"
