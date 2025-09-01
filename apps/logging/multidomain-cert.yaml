@@ -13,7 +13,7 @@ spec:
   dnsNames:
     - "*.kube-system.svc.cluster.local"
     - "hubble-peer.default.hubble-grpc.cilium.io"
-    - "hubble-relay.kube-system.svc.cluster.local"
+    - "hubble-relay-wrong.kube-system.svc.cluster.local"
     - "minikube.default.hubble-grpc.cilium.io"
   usages:
     - server auth
