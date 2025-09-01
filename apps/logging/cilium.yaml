@@ -47,3 +47,6 @@ spec:
             existingSecret: "hubble-multi-certs"
     operator:
       replicas: 1
+    encryption:
+      enabled: false
+      type: ipsec
