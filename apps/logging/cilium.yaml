@@ -22,6 +22,12 @@ spec:
         name: cilium
         namespace: flux-system
   values:
+    encryption:
+      enabled: false
+      type: wireguard
+      nodeEncryption: true
+      strictMode:
+        enabled: true
     hubble:
       tls:
         auto:
@@ -46,6 +52,3 @@ spec:
             existingSecret: "hubble-multi-certs"
     operator:
       replicas: 1
-    encryption:
-      enabled: true
-      type: ipsec
