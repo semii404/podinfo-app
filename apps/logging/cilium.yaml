@@ -48,5 +48,5 @@ spec:
     operator:
       replicas: 1
     encryption:
-      enabled: false
+      enabled: true
       type: ipsec
