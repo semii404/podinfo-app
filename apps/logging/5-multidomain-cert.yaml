@@ -28,8 +28,8 @@ metadata:
   namespace: kube-system
 spec:
   secretName: hubble-multi-certs
-  duration: 5m # certificate valid for 5 minutes
-  renewBefore: 2m # renew 2 minutes before expiry
+  duration: 1h        # ✅ Minimum allowed
+  renewBefore: 5m     # ✅ Minimum allowed
   issuerRef:
     name: hubble-ca-issuer
     kind: ClusterIssuer
