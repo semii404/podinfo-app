@@ -1,3 +1,26 @@
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: hubble-multi-certs
+#   namespace: kube-system
+# spec:
+#   secretName: hubble-multi-certs
+#   duration: 8760h # 1 year
+#   renewBefore: 720h # renew 30d before expiry
+#   issuerRef:
+#     name: hubble-ca-issuer
+#     kind: ClusterIssuer
+#   dnsNames:
+#     # - "*.kube-system.svc.cluster.local"
+#     - "hubble-peer.default.hubble-grpc.cilium.io"
+#     - "hubble-relay.kube-system.svc.cluster.local"
+#     - "minikube.default.hubble-grpc.cilium.io"
+#   usages:
+#     - server auth
+#     - client auth
+
+
+
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -5,13 +28,12 @@ metadata:
   namespace: kube-system
 spec:
   secretName: hubble-multi-certs
-  duration: 8760h # 1 year
-  renewBefore: 720h # renew 30d before expiry
+  duration: 5m # certificate valid for 5 minutes
+  renewBefore: 2m # renew 2 minutes before expiry
   issuerRef:
     name: hubble-ca-issuer
     kind: ClusterIssuer
   dnsNames:
-    # - "*.kube-system.svc.cluster.local"
     - "hubble-peer.default.hubble-grpc.cilium.io"
     - "hubble-relay.kube-system.svc.cluster.local"
     - "minikube.default.hubble-grpc.cilium.io"
