@@ -25,3 +25,7 @@ spec:
     crds: Create
   values:
     installCRDs: true
+
+
+
+#add cert manager
