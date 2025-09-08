@@ -1,3 +1,5 @@
+Method one
+
 Use these commands to generate the main CA cert chain
 
 
@@ -26,3 +28,10 @@ type: kubernetes.io/tls
 data:
   tls.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCg...   # <base64 of ca.crt>
   tls.key: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQo...   # <base64 of ca.key>
+
+
+
+
+method 2 
+
+use certmanager with the autorenewal
