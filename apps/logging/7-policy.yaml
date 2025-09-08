@@ -3,7 +3,13 @@ kind: CiliumClusterwideNetworkPolicy
 metadata:
   name: enforce-mtls
 spec:
-  endpointSelector: {}  # applies to all pods
+  endpointSelector:
+    matchExpressions:
+      # Apply to all pods except those in kube-system namespace
+      - key: "k8s:io.kubernetes.pod.namespace"
+        operator: NotIn
+        values:
+          - kube-system
 
   ingress:
   # Allow inbound only on port 443 from any source
@@ -15,23 +21,22 @@ spec:
         protocol: TCP
 
   egress:
-  # Allow DNS to CoreDNS pods (UDP+TCP 53)
+  # ✅ Allow DNS for these namespaces (still allow talking to kube-dns)
   - toEndpoints:
-    - matchLabels: {}       # matches any pod
-      matchExpressions:
-        - key: "k8s:io.kubernetes.pod.namespace"
-          operator: In
-          values:
-            - kube-system
+    - matchLabels:
+        k8s:k8s-app: kube-dns
     toPorts:
-      - ports:
-          - port: "53"
-            protocol: UDP
-          - port: "53"
-            protocol: TCP
+    - ports:
+        - port: "53"
+          protocol: UDP
+        - port: "53"
+          protocol: TCP
+      rules:
+        dns:
+        - matchPattern: "*"
 
-  # Allow HTTPS (443) to any destination
+  # ✅ Allow HTTPS (443) to any destination
   - toPorts:
-      - ports:
-          - port: "443"
-            protocol: TCP
+    - ports:
+        - port: "443"
+          protocol: TCP
